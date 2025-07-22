@@ -1,83 +1,4 @@
-#name: Java Code Testing
-#
-#on:
-#  push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
-#
-#jobs:
-#  build-and-test:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#    - name: Checkout Student's code
-#      uses: actions/checkout@v3
-#
-#    - name: Checkout Teacher's tests
-#      uses: actions/checkout@v3
-#      with:
-#        repository: Teacher/testA
-#        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-#        path: tests
-#
-#    - name: Set up Java
-#      uses: actions/setup-java@v3
-#      with:
-#        java-version: '11'
-#        distribution: 'adopt'
-#
-#    - name: Cache Maven packages
-#      uses: actions/cache@v3
-#      with:
-#        path: ~/.m2
-#        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-#        restore-keys: |
-#          ${{ runner.os }}-maven-
-#
-#    - name: Build and test
-#      run: |
-#        mvn clean install -DskipTests
-#        cd tests
-#        mvn clean package
-#        cd ..
-#        mvn test -Dtest.source=tests/target/test-classes
-#
-#    - name: Send email on failure
-#      if: failure()
-#      uses: dawidd6/action-send-mail@v3
-#      with:
-#        server_domain: smtp.example.com
-#        server_port: 587
-#        email_from: github-actions@example.com
-#        email_to: ${{ secrets.STUDENT_EMAIL }}
-#        email_subject: 'Тесты не прошли'
-#        email_body: |
-#          Привет!
-#
-#          Твои тесты не прошли проверку:
-#
-#          ${{ github.event.head_commit.message }}
-#
-#          Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-#        username: ${{ secrets.SMTP_USERNAME }}
-#        password: ${{ secrets.SMTP_PASSWORD }}
-#        tls: true
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-
-name: Java Code Testing
+name: Java Core Testing
 
 on:
   push:
@@ -88,47 +9,47 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout Student's code
-      uses: actions/checkout@v3
-      
-    - name: Checkout Teacher's tests
-      uses: actions/checkout@v3
-      with:
-        repository: Teacher/testA
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        path: tests
-        
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-        
-    - name: Cache Maven packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        
-    - name: Build and test
-      run: |
-        mvn clean install -DskipTests
-        cd tests
-        mvn clean package
-        cd..
-        mvn test -Dtest.source=tests/target/test-classes
-      
-    - name: Add comment on failure
-      if: failure()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-          })
 
+    steps:
+      - name: Checkout Student's code
+        uses: actions/checkout@v3
+
+      - name: Checkout Teacher's tests
+        uses: actions/checkout@v3
+        with:
+          repository: Alex286756/AutoTestsProbe
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: tests
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Compile Student's code
+        run: |
+          javac src/main/java/org/example/*.java
+          # Если есть подпапки, добавьте их через пробел
+          # javac src/main/java/package1/*.java src/main/java/package2/*.java
+
+      - name: Compile Tests
+        run: |
+          javac tests/src/test/java/org/example/*.java -cp .:tests/src/test/java
+
+      - name: Run Tests
+        run: |
+          java -cp .:tests/src/test/java TestRunner
+          # Замените TestRunner на имя вашего тестового класса
+
+      - name: Add comment on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            })
