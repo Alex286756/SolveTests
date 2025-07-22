@@ -41,12 +41,12 @@ jobs:
       # Компиляция кода студента
       - name: Compile Student's code
         run: |
-          javac -cp "lib/*:src" src/*.java
+          javac -cp "lib/*:src" src/main/java/org/example/*.java
 
       # Компиляция тестов
       - name: Compile Tests
         run: |
-          javac -cp "lib/*:tests:src" tests/*.java
+          javac -cp "lib/*:tests:src" tests/java/org/example/*.java
 
       # Запуск тестов
       - name: Run Tests
