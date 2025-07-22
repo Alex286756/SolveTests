@@ -19,7 +19,7 @@ jobs:
         with:
           repository: Alex286756/AutoTestsProbe
 #          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          path: .
+          path: src/test
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -35,11 +35,11 @@ jobs:
 
       - name: Compile Tests
         run: |
-          javac tests/src/test/java/org/example/*.java -cp .:tests/src/test/java
+          javac src/test/java/org/example/*.java -cp .:src/test/java
 
       - name: Run Tests
         run: |
-          java -cp .:tests/src/test/java TestRunner
+          java -cp .:src/test/java TestRunner
           # Замените TestRunner на имя вашего тестового класса
 #
 #      - name: Add comment on failure
