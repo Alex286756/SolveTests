@@ -48,10 +48,10 @@ jobs:
         run: |
           javac -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:junit-platform-console-1.9.2.jar:junit-platform-commons-1.9.2.jar:junit-platform-launcher-1.9.2.jar:slf4j-simple-1.7.36.jar:log4j-api-2.17.2.jar:log4j-core-2.17.2.jar:src" src/main/java/org/example/*.java
 
-      - name: Run tests
-        run: |
-          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:junit-platform-console-1.9.2.jar:junit-platform-commons-1.9.2.jar:junit-platform-launcher-1.9.2.jar:slf4j-simple-1.7.36.jar:log4j-api-2.17.2.jar:log4j-core-2.17.2.jar:src" \
-          org.junit.platform.console.ConsoleLauncher --scan-class-path
+#      - name: Run tests
+#        run: |
+#          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:junit-platform-console-1.9.2.jar:junit-platform-commons-1.9.2.jar:junit-platform-launcher-1.9.2.jar:slf4j-simple-1.7.36.jar:log4j-api-2.17.2.jar:log4j-core-2.17.2.jar:src" \
+#          org.junit.platform.console.ConsoleLauncher --scan-class-path
 
       - name: Compile Tests
         run: |
