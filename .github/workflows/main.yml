@@ -44,7 +44,7 @@ jobs:
 
       - name: Run tests
         run: |
-          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" org.junit.platform.console.ConsoleLauncher
+          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" org.example.StudentTest
 
       - name: Compile Tests
         run: |
