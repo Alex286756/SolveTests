@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: Alex286756/AutoTestsProbe
-          path: tests
+          path: src/test
 
       # Устанавливаем JDK
       - name: Set up JDK
@@ -47,7 +47,7 @@ jobs:
       # Компиляция тестов
       - name: Compile Tests
         run: |
-          javac -cp "lib/*:tests:src" tests/java/org/example/*.java
+          javac -cp "lib/*:tests:src" src/test/java/org/example/*.java
 
       # Запуск тестов
       - name: Run Tests
