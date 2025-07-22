@@ -9,40 +9,40 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code from ProdB repository
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'adopt'
-
-      - name: Download tests from TestA repository
-        run: |
-          git clone https://github.com/Alex286756/AutoTestsProbe.git ./src/test # Клонирование тестов из внешнего репозитория
-
-      - name: Compile source files
-        run: |
-          javac src/main/java/org/example/*.java # Компиляция основного кода приложения
-          javac src/test/java/org/example/*.java # Компиляция тестовых классов
-
-      - name: Run tests
-        run: |
-          java -cp .:$JAVA_HOME/lib/tools.jar org.junit.runner.JUnitCore $(ls src/test/java/org/example/*Test.java)          
-          
-
 #
-#      - name: Add comment on failure
-#        if: failure()
-#        uses: actions/github-script@v6
+#    steps:
+#      - name: Checkout code from ProdB repository
+#        uses: actions/checkout@v3
+#
+#      - name: Set up JDK 21
+#        uses: actions/setup-java@v3
 #        with:
-#          script: |
-#            github.rest.issues.createComment({
-#              issue_number: context.issue.number,
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-#            })
+#          java-version: '21'
+#          distribution: 'adopt'
+#
+#      - name: Download tests from TestA repository
+#        run: |
+#          git clone https://github.com/Alex286756/AutoTestsProbe.git ./src/test # Клонирование тестов из внешнего репозитория
+#
+#      - name: Compile source files
+#        run: |
+#          javac src/main/java/org/example/*.java # Компиляция основного кода приложения
+#          javac src/test/java/org/example/*.java # Компиляция тестовых классов
+#
+#      - name: Run tests
+#        run: |
+#          java -cp .:$JAVA_HOME/lib/tools.jar org.junit.runner.JUnitCore $(ls src/test/java/org/example/*Test.java)
+#
+#
+##
+##      - name: Add comment on failure
+##        if: failure()
+##        uses: actions/github-script@v6
+##        with:
+##          script: |
+##            github.rest.issues.createComment({
+##              issue_number: context.issue.number,
+##              owner: context.repo.owner,
+##              repo: context.repo.repo,
+##              body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+##            })
