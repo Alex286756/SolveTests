@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: Alex286756/AutoTestsProbe
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+#          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           path: tests
 
       - name: Set up Java
@@ -41,15 +41,15 @@ jobs:
         run: |
           java -cp .:tests/src/test/java TestRunner
           # Замените TestRunner на имя вашего тестового класса
-
-      - name: Add comment on failure
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-            })
+#
+#      - name: Add comment on failure
+#        if: failure()
+#        uses: actions/github-script@v6
+#        with:
+#          script: |
+#            github.rest.issues.createComment({
+#              issue_number: context.issue.number,
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+#            })
