@@ -112,30 +112,31 @@ public class Student<T> {
 
     public void undo(){
         if (!changesLog.isEmpty()) {
-            switch (changesLog.removeLast()) {
+            switch (changesLog.get(changesLog.size() - 1)) {
                 case CHANGE_NAME -> undoChangeName();
                 case ADD_GRADE -> undoAddGrade();
                 case DELETE_GRADE -> undoDeleteGrade();
                 case DELETE_LAST_GRADE -> undoDeleteLastGrade();
             }
+            changesLog.remove(changesLog.size() - 1);
         }
     }
 
     private void undoChangeName() {
-        this.name = oldNames.removeLast();
+        this.name = oldNames.remove(oldNames.size() - 1);
     }
 
     private void undoAddGrade() {
-        grades.removeLast();
+        grades.remove(grades.size() - 1);
     }
 
     private void undoDeleteGrade() {
-        int index = indexOfGrades.removeLast();
-        grades.add(index, oldGrades.removeLast());
+        int index = indexOfGrades.remove(indexOfGrades.size() - 1);
+        grades.add(index, oldGrades.remove(oldGrades.size() - 1));
     }
 
     private void undoDeleteLastGrade() {
-        grades.add(oldGrades.removeLast());
+        grades.add(oldGrades.remove(oldGrades.size() - 1));
     }
 
 }
