@@ -27,11 +27,24 @@ jobs:
           java-version: '21'
           distribution: 'adopt'
 
+      - name: Download JUnit dependencies
+        run: |
+          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar
+          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar
+
       - name: Compile Student's code
         run: |
           javac src/main/java/org/example/*.java
           # Если есть подпапки, добавьте их через пробел
           # javac src/main/java/package1/*.java src/main/java/package2/*.java
+
+#      - name: Compile code
+#        run: |
+#          javac -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" src/*.java
+#
+#      - name: Run tests
+#        run: |
+#          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" org.junit.platform.console.ConsoleLauncher
 
       - name: Compile Tests
         run: |
