@@ -47,7 +47,7 @@ public class Student<T> {
     }
 
     public String getName() {
-        return name;
+        return "name";
     }
 
     public void setName(String name) {
