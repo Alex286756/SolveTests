@@ -38,13 +38,13 @@ jobs:
           # Если есть подпапки, добавьте их через пробел
           # javac src/main/java/package1/*.java src/main/java/package2/*.java
 
-#      - name: Compile code
-#        run: |
-#          javac -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" src/*.java
-#
-#      - name: Run tests
-#        run: |
-#          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" org.junit.platform.console.ConsoleLauncher
+      - name: Compile code
+        run: |
+          javac -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" src/*.java
+
+      - name: Run tests
+        run: |
+          java -cp "junit-jupiter-api-5.9.2.jar:junit-jupiter-engine-5.9.2.jar:src" org.junit.platform.console.ConsoleLauncher
 
       - name: Compile Tests
         run: |
