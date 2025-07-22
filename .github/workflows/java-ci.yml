@@ -1,0 +1,42 @@
+name: Java CI without Maven
+
+on:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Download JUnit Jupiter dependencies
+        run: |
+          mkdir lib
+          wget -P lib https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/junit/platform/junit-platform-launcher/1.9.2/junit-platform-launcher-1.9.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/1.7.36/slf4j-simple-1.7.36.jar
+
+      - name: Compile main code
+        run: |
+          javac -cp "lib/*:src/main/java" $(find src/main/java -name "*.java")
+
+      - name: Compile tests
+        run: |
+          javac -cp "lib/*:tests/java:src/main/java" $(find tests/java -name "*.java")
+
+      - name: Run tests
+        run: |
+          java -cp "lib/*:tests/java:src/main/java" org.junit.platform.console.ConsoleLauncher \
+          --scan-class-path --include-package=your.package.name
