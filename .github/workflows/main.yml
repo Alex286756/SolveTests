@@ -19,7 +19,7 @@ jobs:
         with:
           repository: Alex286756/AutoTestsProbe
 #          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          path: tests
+          path: .
 
       - name: Set up Java
         uses: actions/setup-java@v3
