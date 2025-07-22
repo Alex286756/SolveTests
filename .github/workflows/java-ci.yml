@@ -1,47 +1,26 @@
-name: Java CI with Tests from External Repo
+name: Build and Test Student Code
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+on: [push]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Student's code
-        uses: actions/checkout@v3
-
-      - name: Checkout Teacher's tests
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           repository: Alex286756/AutoTestsProbe
-          path: .
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+          path: ./instructor-tests
+      - uses: actions/checkout@v2
+        with:
+          ref: '${{ github.ref }}'
+          path: ./student-code
+      - name: Setup Java
+        uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-#      - name: Clean and build
-#        run: |
-#          mvn clean compile
-#          mvn test-compile
-#          mvn verify
-
-      - name: Build and test
+          distribution: 'adopt'
+      - name: Build and Test
         run: |
-          mvn clean verify -Dtest.source=tests \
-          -Dmaven.test.classpath=src/main/java:tests/java
+          cd instructor-tests && mvn verify
+   
