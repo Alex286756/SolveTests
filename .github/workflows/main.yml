@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: Alex286756/AutoTestsProbe
-        token: ${{ first_env.PERSONAL_ACCESS_TOKEN }}
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         path: tests
         
     - name: Set up Java
