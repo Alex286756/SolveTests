@@ -22,16 +22,16 @@ jobs:
 
       - name: Download tests from TestA repository
         run: |
-          git clone https://github.com/Alex286756/AutoTestsProbe.git ./tests # Клонирование тестов из внешнего репозитория
+          git clone https://github.com/Alex286756/AutoTestsProbe.git ./src/test # Клонирование тестов из внешнего репозитория
 
       - name: Compile source files
         run: |
-          javac src/*.java # Компиляция основного кода приложения
-          javac tests/src/*.java # Компиляция тестовых классов
+          javac src/main/java/org/example/*.java # Компиляция основного кода приложения
+          javac src/test/java/org/example/*.java # Компиляция тестовых классов
 
       - name: Run tests
         run: |
-          java -cp .:$JAVA_HOME/lib/tools.jar org.junit.runner.JUnitCore $(ls tests/src/*Test.java)          
+          java -cp .:$JAVA_HOME/lib/tools.jar org.junit.runner.JUnitCore $(ls src/test/java/org/example/*Test.java)          
           
 
 #
