@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: Alex286756/AutoTestsProbe
-          path: .
+          path: tests
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -35,6 +35,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+#      - name: Clean and build
+#        run: |
+#          mvn clean compile
+#          mvn test-compile
+#          mvn verify
+
       - name: Build and test
         run: |
-          mvn clean verify -Dtest.source=src/test
+          mvn clean verify -Dtest.source=tests \
+          -Dmaven.test.classpath=src/main/java:tests/java
