@@ -6,21 +6,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          repository: Alex286756/AutoTestsProbe
+#          path: ./instructor-tests
+#      - uses: actions/checkout@v2
+#        with:
+#          ref: '${{ github.ref }}'
+#          path: ./student-code
+#      - name: Setup Java
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '17'
+#          distribution: 'adopt'
+#      - name: Build and Test
+#        run: |
+#          cd instructor-tests && mvn verify
+   
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: Alex286756/AutoTestsProbe
-          path: ./instructor-tests
+          path: student-code
       - uses: actions/checkout@v2
         with:
-          ref: '${{ github.ref }}'
-          path: ./student-code
-      - name: Setup Java
+          repository: Alex286756/AutoTestsProbe
+          path: instructor-tests
+      - name: Set up Java
         uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'adopt'
       - name: Build and Test
         run: |
-          cd instructor-tests && mvn verify
-   
+          cp -R instructor-tests/src/test/java/* student-code/src/test/java/
+          cd student-code
+          mvn clean package
+          rm -rf src/test/java/*
