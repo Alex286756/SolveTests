@@ -34,9 +34,9 @@ jobs:
 
       - name: Compile tests
         run: |
-          javac -cp "lib/*:tests/java:src/main/java" $(find tests/java -name "*.java")
+          javac -cp "lib/*:src/test/java:src/main/java" $(find src/test/java -name "*.java")
 
       - name: Run tests
         run: |
-          java -cp "lib/*:tests/java:src/main/java" org.junit.platform.console.ConsoleLauncher \
+          java -cp "lib/*:src/test/java:src/main/java" org.junit.platform.console.ConsoleLauncher \
           --scan-class-path --include-package=your.package.name
