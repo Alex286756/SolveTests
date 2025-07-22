@@ -32,6 +32,10 @@ jobs:
         run: |
           javac -cp "lib/*:src/main/java" $(find src/main/java -name "*.java")
 
+      - name: Download tests from TestA repository
+        run: |
+          git clone https://github.com/Alex286756/AutoTestsProbe.git ./src/test # Клонирование тестов из внешнего репозитория
+
       - name: Compile tests
         run: |
           javac -cp "lib/*:src/test/java:src/main/java" $(find src/test/java -name "*.java")
