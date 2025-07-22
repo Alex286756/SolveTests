@@ -1,0 +1,55 @@
+name: Java Code Testing
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Student's code
+      uses: actions/checkout@v3
+      
+    - name: Checkout Teacher's tests
+      uses: actions/checkout@v3
+      with:
+        repository: Alex286756/AutoTestsProbe
+        token: ${{ first_env.PERSONAL_ACCESS_TOKEN }}
+        path: tests
+        
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        
+    - name: Compile Student's code
+      run: |
+        javac src/main/java/*.java
+        # Если есть подпапки, добавьте их через пробел
+        # javac src/main/java/package1/*.java src/main/java/package2/*.java
+
+    - name: Compile Tests
+      run: |
+        javac tests/src/test/java/*.java -cp .:tests/src/test/java
+
+    - name: Run Tests
+      run: |
+        java -cp .:tests/src/test/java TestRunner
+        # Замените TestRunner на имя вашего тестового класса
+
+    - name: Add comment on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '⚠️ Тесты не прошли! Подробности: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+          })
